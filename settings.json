@@ -1,0 +1,7 @@
+{
+    "port": 5555,
+    "routes": {
+        "foo.com": "/foo",
+        "bar.com": "/bar"
+    }
+}
