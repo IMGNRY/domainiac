@@ -70,6 +70,8 @@ function startServer() {
 
     app.get('*', function(req, res, next) {
 
+        console.log('Request from domain: %s', req.host);
+
         if (req.host == 'localhost') {
             next();
             return;
@@ -81,10 +83,15 @@ function startServer() {
             return;
         }
 
-        request.get('http://localhost:' + settings.port + filepath + req.path).pipe(res);
+        var url = 'http://localhost:' + settings.port + filepath + req.path;
+        console.log(url);
+        request.get(url).pipe(res);
      
     });
-    app.use(express.static(__dirname));
+
+    console.log('Current working directory: %s', process.cwd());
+    app.use(express.static(process.cwd()));
+    app.use(express.logger());
 
     app.listen(settings.port);
 

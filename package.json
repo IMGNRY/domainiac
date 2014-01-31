@@ -1,8 +1,13 @@
 {
   "name": "domainiac",
   "version": "0.1.0",
-  "engines": "0.10.24",
-  "keywords": ["router", "server", "static", "domain", "directory"],
+  "keywords": [
+    "router", 
+    "server", 
+    "static", 
+    "domain", 
+    "directory"
+  ],
   "description": "A very simple and user friendly domain -> directory router.",
   "main": "index.js",
   "author": {
@@ -10,17 +15,17 @@
     "email": "fille@imgnry.com"
   },
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">= 0.10.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/IMGNRY/domainiac"
+    "url": "git://github.com/IMGNRY/domainiac"
   },
   "license": "MIT",
   "dependencies": {
     "express": "~3.4",
-    "colors": "~0.6.2",
-    "request": "~2.33.0"
+    "colors": "~0.6",
+    "request": "~2.33"
   },
   "preferGlobal": "true",
   "bin": {
