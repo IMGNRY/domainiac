@@ -26,51 +26,60 @@ SOFTWARE.
 
 */
 
+'use strict'
+
 var express = require('express');
 var colors = require('colors');
 var request = require('request');
 var fs = require('fs');
+var prettyError = require('pretty-error');
 
 var app = express();
 
 var settings;
 
-fs.readFile('settings.json', { encoding: 'utf-8' }, function(err, data) {
-    if (!data) {
-        console.log(err);
-        console.log('ERROR! Could not find or read a settings.json file, will try to create one.'.red);
-        settings = {
-            port: 80,
-            routes: {
-                'foo.com': '/foo',
-                'bar.com': '/bar',
+prettyError.start(function() {
+    init();
+});
+
+function init() {
+
+    fs.readFile('settings.json', { encoding: 'utf-8' }, function(err, data) {
+        if (!data) {
+            console.log(err);
+            console.log('ERROR! Could not find or read a settings.json file, will try to create one.'.red);
+            settings = {
+                port: 80,
+                routes: {
+                    'foo.com': '/foo',
+                    'bar.com': '/bar',
+                }
             }
-        }
-        fs.writeFile('settings.json', JSON.stringify(settings, null, 4));
-        console.log('Successfully created a template settings.json file. Edit the file to suite your needs, and then restart the server.'.yellow);
-        return;
-    }
-    else {
-        settings = JSON.parse(data);
-        var routes = settings['routes'];
-        if (!routes) {
-            console.log('ERROR! Could not find any routes in the settings.json file. Edit the file, and then restart the server.');
+            fs.writeFile('settings.json', JSON.stringify(settings, null, 4));
+            console.log('Successfully created a template settings.json file. Edit the file to suite your needs, and then restart the server.'.yellow);
             return;
         }
-        console.log('Found the following routes\n---------------------------')
-        for (key in routes) {
-            console.log(key.yellow + ' -> '.grey + routes[key].cyan);
+        else {
+            settings = JSON.parse(data);
+            var routes = settings['routes'];
+            if (!routes) {
+                console.log('ERROR! Could not find any routes in the settings.json file. Edit the file, and then restart the server.');
+                return;
+            }
+            console.log('Found the following routes\n---------------------------');
+            for (key in routes) {
+                console.log(key.yellow + ' -> '.grey + routes[key].cyan);
+            }
         }
-    }
 
-    startServer();
-});
+        startServer();
+    });
+
+}
 
 function startServer() {
 
     app.get('*', function(req, res, next) {
-
-        console.log('Request from domain: %s', req.host);
 
         if (req.host == 'localhost') {
             next();
@@ -84,7 +93,9 @@ function startServer() {
         }
 
         var url = 'http://localhost:' + settings.port + filepath + req.path;
-        console.log(url);
+
+        console.log(req.host);
+
         request.get(url).pipe(res);
      
     });
