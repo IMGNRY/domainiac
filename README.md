@@ -18,7 +18,7 @@ Install it through the Node Package Manager:
 Note that it should be installed globally to be able to run it from any folder.
 
 Then start `$ domainiac` from preferred folder.
-This automatically creates the file settings.json in that folder that looks like this:
+This automatically creates the file **settings.json** in that folder that looks like this:
 
 ```json
 {
