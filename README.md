@@ -30,7 +30,7 @@ This automatically creates the file settings.json in that folder that looks like
 }
 ```
 
-Edit **settings.json** and then run `domainiac` again to get it running.
+Edit **settings.json** and then run `$ domainiac` again to get it running.
 
 If you want to run domainiac using the node module [forever](https://www.npmjs.org/package/forever "A simple CLI tool for ensuring that a given node script runs continuously") you'll have to specify the complete location in order to make it work, as it doesn't support sumbolic links:
 
